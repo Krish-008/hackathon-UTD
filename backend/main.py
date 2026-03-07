@@ -14,11 +14,3 @@ app.add_middleware(
 @app.get("/")
 def root():
     return {"status": "QuestMap backend is live 🚀"}
-```
-
-### 5. Create `backend/.gitignore`
-```
-venv
-__pycache__
-.env
-*.pyc
