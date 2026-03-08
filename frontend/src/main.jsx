@@ -1,5 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+
+console.log("React is attempting to mount...");
+window.onerror = function (msg, url, line, col, error) {
+  console.log("Global Error Captured: ", msg, " at ", url, ":", line);
+};
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
