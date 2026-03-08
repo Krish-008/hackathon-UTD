@@ -44,17 +44,21 @@ app.post('/api/generate-map', async (req, res) => {
   }`;
 
     try {
+        console.log(`[${new Date().toISOString()}] Request received for topic: "${topic}"`);
         const result = await model.generateContent(prompt);
+        console.log(`[${new Date().toISOString()}] Gemini response received.`);
+
         let text = result.response.text();
 
         // Clean up response in case Gemini adds markdown blocks
         text = text.replace(/```json|```/g, '').trim();
 
         const json = JSON.parse(text);
+        console.log(`[${new Date().toISOString()}] Success: Map generated.`);
         res.json(json);
     } catch (error) {
-        console.error("Gemini Error:", error);
-        res.status(500).json({ error: 'Failed to generate map. Please try again.' });
+        console.error(`[${new Date().toISOString()}] Gemini Error:`, error.message);
+        res.status(500).json({ error: 'Failed to generate map', details: error.message });
     }
 });
 
