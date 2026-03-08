@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { signInWithPopup } from 'firebase/auth';
@@ -7,17 +7,18 @@ import { Compass, Mail, Lock, ArrowRight } from 'lucide-react';
 
 const Login = () => {
     const navigate = useNavigate();
+    const [error, setError] = useState('');
 
     const handleGoogleLogin = async () => {
         try {
-            // Note: This will fail with 'placeholder' keys, but confirms the button works
+            setError('');
             const result = await signInWithPopup(auth, googleProvider);
             if (result.user) {
                 navigate('/dashboard');
             }
-        } catch (error) {
-            console.error("Login failed:", error);
-            alert("Login check triggered. If you haven't added real keys to .env, this is expected to fail. Check console!");
+        } catch (err) {
+            console.error("Login failed:", err);
+            setError(err.message || "Failed to sign in. Please verify your Firebase configuration.");
         }
     };
 
@@ -35,6 +36,12 @@ const Login = () => {
                     <h1 className="text-3xl font-bold">Welcome Back</h1>
                     <p className="text-gray-400 mt-2">Log in to continue your quest</p>
                 </div>
+
+                {error && (
+                    <div className="bg-red-500/10 border border-red-500/50 text-red-400 p-4 rounded-xl mb-6 text-sm font-medium text-center">
+                        {error}
+                    </div>
+                )}
 
                 <div className="space-y-4">
                     <div className="relative">
