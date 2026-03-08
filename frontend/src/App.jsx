@@ -8,6 +8,10 @@ import { Compass, LogIn } from 'lucide-react';
 function App() {
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    console.log("QuestMap Landing Page Mounted");
+  }, []);
+
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
@@ -16,14 +20,14 @@ function App() {
       }
     } catch (error) {
       console.error("Login failed:", error);
-      alert("Failed to login with Google. Check console for details.");
+      alert("Note: If you haven't updated .env with real Firebase keys, external login will fail. This is expected!");
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-900 text-white font-sans selection:bg-blue-500/30">
       {/* Navbar */}
-      <nav className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+      <nav className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto border-b border-white/5">
         <div className="flex items-center gap-2">
           <div className="bg-blue-600 p-2 rounded-lg">
             <Compass className="w-6 h-6 text-white" />
@@ -31,13 +35,21 @@ function App() {
           <span className="text-xl font-bold tracking-tight">QuestMap</span>
         </div>
 
-        <button
-          onClick={handleGoogleLogin}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-gray-900 font-semibold hover:bg-gray-100 transition-all active:scale-95 shadow-lg shadow-white/5"
-        >
-          <LogIn className="w-4 h-4" />
-          Login with Google
-        </button>
+        <div className="flex items-center gap-6">
+          <button
+            onClick={() => navigate('/login')}
+            className="text-gray-400 hover:text-white font-medium transition-colors"
+          >
+            Sign In
+          </button>
+          <button
+            onClick={handleGoogleLogin}
+            className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-gray-900 font-semibold hover:bg-gray-100 transition-all active:scale-95 shadow-lg shadow-white/5"
+          >
+            <LogIn className="w-4 h-4" />
+            Login with Google
+          </button>
+        </div>
       </nav>
 
       {/* Hero Section */}
@@ -67,7 +79,7 @@ function App() {
             className="flex flex-wrap gap-4 justify-center md:justify-start"
           >
             <button
-              onClick={handleGoogleLogin}
+              onClick={() => navigate('/login')}
               className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-blue-500/20 transition-all active:scale-95 flex items-center gap-2"
             >
               Start Your Quest →
@@ -101,7 +113,7 @@ function App() {
         </motion.div>
       </main>
 
-      {/* Footer / Social Proof */}
+      {/* Footer */}
       <footer className="border-t border-white/5 py-12 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-gray-500 text-sm">
           <p>© {new Date().getFullYear()} QuestMap. All rights reserved.</p>
