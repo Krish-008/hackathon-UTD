@@ -8,10 +8,15 @@ import Dashboard from './pages/Dashboard.jsx'
 
 const rootElement = document.getElementById('root');
 
-console.log("React: Starting mount phase...");
+console.log("React Element Found:", !!rootElement);
+if (!rootElement) {
+  console.error("CRITICAL: #root element not found in HTML!");
+}
 
 try {
+  console.log("React: Creating root...");
   const root = createRoot(rootElement);
+  console.log("React: Root created. Starting render...");
   root.render(
     <StrictMode>
       <BrowserRouter>

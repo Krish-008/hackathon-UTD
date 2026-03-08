@@ -1,8 +1,0 @@
-fastapi
-uvicorn
-anthropic
-firebase-admin
-pandas
-scikit-learn
-matplotlib
-python-dotenv
