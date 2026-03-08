@@ -28,8 +28,8 @@ const Dashboard = () => {
         setError('');
 
         try {
-            // Note: Using localhost:5000 strictly for this verification block
-            const response = await fetch('http://localhost:5000/api/generate-map', {
+            // Note: Now using relative path so Vercel & Vite Proxy can handle it
+            const response = await fetch('/api/generate-map', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ topic, skill_level: level })
